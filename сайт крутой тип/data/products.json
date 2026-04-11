@@ -1,0 +1,20 @@
+{
+    "Значок MysiaGMD": {
+        "size": "38мм",
+        "material": "аллюминий",
+        "price": "599"
+    },
+
+    "Значок RuneGDPS": {
+        "size": "38мм",
+        "material": "аллюминий",
+        "price": "599"
+    },
+
+    "Наклейки RuneGDPS": {
+        "size": "~60мм",
+        "matrial": "бумага",
+        "amount": "30 шт",
+        "price": "499"
+    }
+}
