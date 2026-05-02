@@ -2,26 +2,32 @@
     "Значок MysiaGMD": {
         "size": "~38мм",
         "material": "аллюминий",
-        "price": "399"
+        "amount": "1 шт.",
+        "price": "399",
+        "image": "./images/pin_mysia.png"
     },
 
     "Значок RuneGDPS": {
         "size": "~38мм",
         "material": "аллюминий",
-        "price": "399"
+        "amount": "1 шт.",
+        "price": "399",
+        "image": "./images/pin_rune.png"
     },
 
     "Наклейки RuneGDPS": {
         "size": "~60мм",
-        "matrial": "бумага",
+        "material": "бумага",
         "amount": "30 шт.",
-        "price": "499"
+        "price": "499",
+        "image": "./images/stickers.jpg"
     },
     
     "Значки MysiaGMD Prime": {
         "size": "~48мм",
         "material": "аллюминий",
         "amount": "2 шт.",
-        "price": "699"
+        "price": "699",
+        "image": "./images/pins_mysiagmd.jpg"
     }
 }
