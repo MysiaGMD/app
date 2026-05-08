@@ -208,3 +208,43 @@ body {
   margin: 10px;
   background-color: #fff;
 }
+
+
+.order {
+  display: flex !important;
+  align-items: center;
+}
+
+.order span {
+  margin: 0 8px;
+}
+
+.change-order-button {
+  border:None;
+  width:40px;
+  height: 30px;
+  border-radius:5px;
+  background-color: #416eeb;
+  color:white;
+  transition: 0.3s ease-in-out;
+}
+
+.change-order-button:hover {
+  transform: scale(1.15);
+  transition: 0.3s ease-in-out;
+}
+
+.to-cart-button {
+  border:None;
+  width: 150px;
+  height: 30px;
+  border-radius:5px;
+  background-color: #416eeb;
+  color:white;
+  transition: 0.3s ease-in-out;
+}
+
+.to-cart-button:hover {
+  transform: scale(1.05);
+  transition: 0.3s ease-in-out;
+}

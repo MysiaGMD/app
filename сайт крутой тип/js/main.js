@@ -79,6 +79,7 @@ function getProductOrderDiv(phoneName) {
 
   // кнопка добавления в корзину первого товара
   const firstButton = document.createElement('button')
+  firstButton.className = 'to-cart-button'
   firstButton.innerText = 'В КОРЗИНУ'
   firstButton.onclick = () => {
     const counter = orderAdd(phoneName)
