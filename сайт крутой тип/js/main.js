@@ -1,6 +1,32 @@
 'use strict'
 
 const catalog = document.getElementById("catalog")
+const cartProductCounter = document.getElementById('cart-product-counter')
+const isCart = window.location.pathname.endsWith('cart.html')
+
+const cartLink = document.getElementById('cart')
+
+
+if (!isCart) {
+    const searchInput = document.getElementById("search")
+
+    searchInput.addEventListener("input", (e) => {
+        checkSearchInput(e.target.value)
+    })
+}
+function checkSearchInput(searchValue) {
+    const products = catalog.querySelectorAll(".description")
+
+    const searchText = searchValue.toLowerCase().trim()
+
+    products.forEach(product => {
+        const productText = product.textContent.toLowerCase()
+
+        const isMatch = productText.includes(searchText)
+
+        product.style.display = isMatch ? 'block' : 'none'
+    })
+}
 
 fetch("./data/products.json")
   .then(response => response.json())
@@ -45,10 +71,15 @@ function getProductCard(productName, productData) {
   productCard.append(amount)
 
   const price = document.createElement('p')
-  price.innerText = "Цена: " + productData.price + " ₸"
+  price.className = 'price'
+
+  price.innerHTML = `
+      Цена: <span>${productData.price}</span> ₸
+  `
+
   productCard.append(price)
 
-  const productOrderDiv = getProductOrderDiv(productName)
+  const productOrderDiv = getProductOrderDiv(productName, productCard)
   productCard.append(productOrderDiv)
   
   return productCard
@@ -70,10 +101,14 @@ function updateProductOrderDiv(firstButton, removeButton, counterSpan, counter, 
     counterSpan.style.display = 'none'
     addButton.style.display = 'none'
   }
+
+  if (isCart === true) {
+    recalculateOrderSum()
+  }
 }
 
 
-function getProductOrderDiv(phoneName) {
+function getProductOrderDiv(productName, productCard) {
   const orderDiv = document.createElement('div')
   orderDiv.className = 'order'
 
@@ -82,7 +117,7 @@ function getProductOrderDiv(phoneName) {
   firstButton.className = 'to-cart-button'
   firstButton.innerText = 'В КОРЗИНУ'
   firstButton.onclick = () => {
-    const counter = orderAdd(phoneName)
+    const counter = orderAdd(productName)
     
     updateProductOrderDiv(firstButton, removeButton, counterSpan, counter, addButton)
   }
@@ -93,9 +128,13 @@ function getProductOrderDiv(phoneName) {
   removeButton.className = 'change-order-button'
   removeButton.innerText = '-'
   removeButton.onclick = () => {
-    const counter = orderRemove(phoneName)
+    const counter = orderRemove(productName)
     // обновляем кнопки заказа и счетчик
     updateProductOrderDiv(firstButton, removeButton, counterSpan, counter, addButton)
+    if (isCart && counter === 0) {
+      productCard.remove()
+      recalculateOrderSum()
+    }
   }
   orderDiv.append(removeButton)
 
@@ -110,7 +149,7 @@ function getProductOrderDiv(phoneName) {
   addButton.className = 'change-order-button'
   addButton.innerText = '+'
   addButton.onclick = () => {
-    const counter = orderAdd(phoneName)
+    const counter = orderAdd(productName)
     // обновляем кнопки заказа и счетчик
     updateProductOrderDiv(firstButton, removeButton, counterSpan, counter, addButton)
   }
@@ -119,8 +158,8 @@ function getProductOrderDiv(phoneName) {
 
   // обновляем кнопки заказа и счетчик
   let counter = 0
-  if (phoneName in order) {
-    counter = order[phoneName]
+  if (productName in order) {
+    counter = order[productName]
   }
 
   updateProductOrderDiv(firstButton, removeButton, counterSpan, counter, addButton)
@@ -128,8 +167,6 @@ function getProductOrderDiv(phoneName) {
   return orderDiv
 }
 
-
-const cartProductCounter = document.getElementById('cart-product-counter')
 
 let order = {}
 let storageData = localStorage.getItem('order')
@@ -186,4 +223,66 @@ function orderRemove(productKey) {
 
   updateLocalStorage()
   return count
+}
+
+function recalculateOrderSum() {
+    let sum = 0
+
+    const products = catalog.querySelectorAll(".description")
+
+    products.forEach(product => {
+
+        const countSpan = product.querySelector(".order-counter")
+        const count = +countSpan.innerText
+
+
+        const priceDiv = product.querySelector(".price")
+        const priceSpan = priceDiv.querySelector("span")
+        const price = +priceSpan.innerText
+
+        if (price > 0 && count > 0) {
+            sum += price * count
+        }
+    })
+
+    const orderTotalSum = document.getElementById("order-total-sum")
+    orderTotalSum.innerText = sum + " ₸"
+}
+
+
+function updateCartCounter(value) {
+
+    if (isCart) {
+        return
+    }
+
+    const count = +cartProductCounter.innerText
+    cartProductCounter.innerText = count + value
+}
+
+function getProducts(data) {
+
+    for (let productName in data) {
+
+        if (isCart === true) {
+
+            if (productName in order) {
+                const productData = data[productName]
+                const productCard = getProductCard(productName, productData)
+
+                catalog.append(productCard)
+            }
+
+        } else {
+
+            const productData = data[productName]
+            const productCard = getProductCard(productName, productData)
+
+            catalog.append(productCard)
+        }
+    }
+
+    if (isCart === true) {
+        recalculateOrderSum()
+    }
 }

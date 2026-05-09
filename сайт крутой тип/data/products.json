@@ -3,7 +3,7 @@
         "size": "~38мм",
         "material": "аллюминий",
         "amount": "1 шт.",
-        "price": "399",
+        "price": "400",
         "image": "./images/pin_mysia.png"
     },
 
@@ -11,7 +11,7 @@
         "size": "~38мм",
         "material": "аллюминий",
         "amount": "1 шт.",
-        "price": "399",
+        "price": "400",
         "image": "./images/pin_rune.png"
     },
 
@@ -19,7 +19,7 @@
         "size": "~60мм",
         "material": "бумага",
         "amount": "30 шт.",
-        "price": "499",
+        "price": "400",
         "image": "./images/stickers.jpg"
     },
     
@@ -27,7 +27,7 @@
         "size": "~48мм",
         "material": "аллюминий",
         "amount": "2 шт.",
-        "price": "699",
+        "price": "700",
         "image": "./images/pins_mysiagmd.jpg"
     }
 }
